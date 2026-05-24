@@ -1,0 +1,53 @@
+
+services:
+
+  api:
+    build: ./backend
+    container_name: codemate-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PORT=3000
+      - NODE_ENV=development
+    depends_on:
+      - redis
+    networks:
+      - codemate-network
+
+  worker:
+    build: ./backend
+    container_name: codemate-worker
+    command: node src/worker/worker.js
+    env_file:
+      - ./backend/.env
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - codemate-worker-temp:/app/temp
+    depends_on:
+      - redis
+    networks:
+      - codemate-network
+  redis:
+    image: redis:alpine
+    container_name: codemate-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - codemate-network
+    volumes:
+      - redis-data:/data
+
+networks:
+  codemate-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+  codemate-worker-temp:
