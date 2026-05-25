@@ -69,7 +69,9 @@ export const runAllTestCases = async (language, fileName, testCases, timeout = 5
       expected: result.expected,
       output: result.output,
       passed: result.passed,
-      executionTime: result.executionTime
+      executionTime: result.executionTime,
+      timedOut: result.timedOut,
+      error: result.error
     });
 
     if (result.timedOut || (result.error && !result.stderr)) {

@@ -44,7 +44,7 @@ function OutputPanel({ output }) {
                 <div className={`px-3 py-1.5 flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${
                   result.passed ? "bg-success/20 text-success" : "bg-error/20 text-error"
                 }`}>
-                  {result.passed ? <CheckCircle className="size-3" /> : <XCircle className la="size-3" />}
+                  {result.passed ? <CheckCircle className="size-3" /> : <XCircle className="size-3" />}
                   Test Case {index + 1}
                 </div>
                 <div className="p-3 space-y-2">

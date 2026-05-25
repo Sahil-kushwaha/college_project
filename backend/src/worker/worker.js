@@ -58,7 +58,7 @@ const worker = new Worker(
 
     try {
       // Step 4: Run all test cases
-      const results = await runAllTestCases(language, fileName, testCases, 5000);
+      const results = await runAllTestCases(language, fileName, testCases, 10000);
      
       // Step 5: Evaluate results
       const evaluation = evaluateResults(results);

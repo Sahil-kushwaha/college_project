@@ -7,7 +7,7 @@ import ProblemDescription from "../components/ProblemDescription";
 import OutputPanel from "../components/OutputPanel";
 import CodeEditorPanel from "../components/CodeEditorPanel";
 import { executeCode } from "../lib/piston";
-import { fetchProblemBySlug } from "../api/problems";
+import { problemApi } from "../api/problems";
 
 import toast from "react-hot-toast";
 import confetti from "canvas-confetti";
@@ -28,7 +28,7 @@ function ProblemPage() {
     async function loadProblem() {
       try {
         setIsLoading(true);
-        const problem = await fetchProblemBySlug(id);
+        const problem = await problemApi.getProblem(id);
         setCurrentProblem(problem);
 
         // Use static starter code as fallback since it's not in DB

@@ -56,6 +56,7 @@ export const submitCode = async (req, res) => {
       language,
       problemId
     }, {
+      jobId: submission._id.toString(),
       removeOnComplete: {
         age: 3600, // 1 hour
         count: 100 // keep last 100 results

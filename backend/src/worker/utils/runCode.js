@@ -12,12 +12,15 @@ export const runCode = async (command, input = "", timeout = 5000) => {
   return new Promise((resolve) => {
     const args = command.trim().split(/\s+/);
     const cmd = args.shift();
-    const child = spawn(cmd, args, {
-      timeout,
-    });
+
+    const child = spawn(cmd, args);
 
     let stdoutData = "";
     let stderrData = "";
+
+    const timer = setTimeout(() => {
+      child.kill('SIGKILL');
+    }, timeout);
 
     child.stdout.on("data", (data) => {
       stdoutData += data.toString();
@@ -26,6 +29,7 @@ export const runCode = async (command, input = "", timeout = 5000) => {
       stderrData += data.toString();
     });
     child.on("error", (error) => {
+      clearTimeout(timer);
       resolve({
         stdout: stdoutData,
         stderr: error.message,
@@ -35,6 +39,7 @@ export const runCode = async (command, input = "", timeout = 5000) => {
     });
 
     child.on("close", (code) => {
+      clearTimeout(timer);
       const executionTime = Date.now() - startTime;
 
       if (code === 137 || executionTime >= timeout) {
@@ -48,7 +53,7 @@ export const runCode = async (command, input = "", timeout = 5000) => {
 
       resolve({
         stdout: stdoutData,
-        stderr: stderrData,
+        stderr: stderrData || (code !== 0 ? `Process exited with code ${code}` : ""),
         executionTime,
         timedOut: false
       });

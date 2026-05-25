@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Navbar from "../components/Navbar";
-import { createProblem } from "../api/problems";
+import { problemApi } from "../api/problems";
 import toast from "react-hot-toast";
 import { PlusIcon, TrashIcon, SaveIcon } from "lucide-react";
 
@@ -124,7 +124,7 @@ function AdminProblemPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await createProblem(formData);
+      await problemApi.createProblem(formData);
       toast.success("Problem created successfully!");
       navigate("/problems");
     } catch (error) {

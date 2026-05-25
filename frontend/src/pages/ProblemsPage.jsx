@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import Navbar from "../components/Navbar";
-import { fetchProblems } from "../api/problems";
+import { problemApi } from "../api/problems";
 import { ChevronRightIcon, Code2Icon } from "lucide-react";
 import { getDifficultyBadgeClass } from "../lib/utils";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ function ProblemsPage() {
   useEffect(() => {
     async function loadProblems() {
       try {
-        const data = await fetchProblems();
+        const data = await problemApi.getProblems();
         setProblems(data.problems || []);
       } catch (error) {
         toast.error("Failed to load problems");
