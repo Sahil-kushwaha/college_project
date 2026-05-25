@@ -23,7 +23,7 @@ app.use(express.json());
 
 // credentials:true => server allows browser to include cookies on requests
 app.use(cors({
-  origin: ["http://localhost:5173","https://codemate-frontend.vercel.app"],
+  origin: ["http://localhost:5173","https://codemate.software","http://codemate.software",, "http://20.244.80.32"], // allow both local and deployed frontend
   credentials: true
 }));
 app.use(clerkMiddleware()); // this adds auth field to request object: req.auth()
